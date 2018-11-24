@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import FileReaderInput from 'react-file-reader-input';
 import RcMenu, {MenuItem} from 'rc-menu';
 
-import fileUploadIcon from './Icons/file-upload.svg';
-import lightbulbOpenIcon from './Icons/lightbulb-o.svg';
-import lightbulbIcon from './Icons/lightbulb.svg';
+import {
+  FileUploadIcon,
+  LightIcon,
+  DarkIcon
+} from './Icons';
 
 function transformLighteness(dx, dy, ligitRate, imageData) {
   const {width, height} = imageData;
@@ -21,7 +23,7 @@ function transformLighteness(dx, dy, ligitRate, imageData) {
       imageData.data[i + 0] *= rate;  // R value
       imageData.data[i + 1] *= rate;  // G value
       imageData.data[i + 2] *= rate;  // B value
-      // imageData.data[i + 3] = 255;    // A value
+      // imageData.data[i + 3] = 255; // A value
     }
   }
   return imageData;
@@ -53,7 +55,6 @@ class Menu extends Component {
   handleMenuClick = e => {
     const key = e.key;
     const canvasDOM = document.getElementById('canvas');
-
     canvasDOM.removeEventListener('touchstart', this.listener);
     this.listener = e => {
       const {clientX, clientY} = e.touches[0];
@@ -78,16 +79,16 @@ class Menu extends Component {
 			<div className="menu">
         <FileReaderInput id="my-file-input"
           onChange={this.handleLoadImage}>
-          <span className="rc-menu-item" style={{marginTop: 5}}>
-            <img key="upload" src={fileUploadIcon} alt="图片上传"/>
-          </span>
+            <span className="rc-menu-item" style={{marginTop: 7}}>
+              <FileUploadIcon /><div className="menu-label">图片上传</div>
+            </span>
         </FileReaderInput>
         <RcMenu>
           <MenuItem key="light" onClick={this.handleMenuClick}>
-            <img src={lightbulbOpenIcon} alt="局部变亮"/>        
+            <LightIcon /><div className="menu-label">局部高亮</div>
           </MenuItem>
           <MenuItem key="dark" onClick={this.handleMenuClick}>
-            <img src={lightbulbIcon} alt="局部变暗"/>
+            <DarkIcon /><div className="menu-label">局部阴影</div>
           </MenuItem>
         </RcMenu>
 			</div>
